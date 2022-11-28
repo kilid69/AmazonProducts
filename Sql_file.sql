@@ -3,8 +3,6 @@ USE amazon;
 
 
 
-
-
 -- Creating a main table.
 
 CREATE TABLE amazon_db AS
@@ -26,8 +24,6 @@ FROM amazon1 t1
 
 
 
-
-
 -- Split first two words of Product_name
 
 WITH cte AS (SELECT product_name, substring_index(product_name, ' ', 1) first_word, 
@@ -35,11 +31,10 @@ WITH cte AS (SELECT product_name, substring_index(product_name, ' ', 1) first_wo
 			 FROM amazon1)
 SELECT first_word, COUNT(first_word) FROM cte GROUP BY first_word ORDER BY COUNT(first_word) DESC;
 
-
-
-
-
 -- Most repeated first words are the manufacturer's name
+
+
+
 
 WITH cte AS (SELECT product_name, substring_index(product_name, ' ', 1) first_word, 
 	     substring_index(substring_index(product_name, ' ', 2),' ', -1) second_word 
@@ -47,8 +42,6 @@ WITH cte AS (SELECT product_name, substring_index(product_name, ' ', 1) first_wo
 Select second_word, count(second_word) from cte group by second_word order by count(second_word) DESC;
 
 -- Most repeated second Words: Diecast, Wars, Toys, Puppet, birthday, Dolls, Games, etc
-
-
 
 
 
@@ -78,8 +71,6 @@ SELECT * FROM CTE WHERE cnt_prod > 10;
 
 
 
-
-
 -- Overall Statistic of my two categories of Manufacturers / Shops
 
 WITH CTE AS (SELECT manufacturer, count(product_name) cnt_prod, AVG(price) avg_price, FLOOR(AVG(num_reviews)) avg_cnt_reviews, AVG(rate) avg_rate, 
@@ -88,6 +79,7 @@ WITH CTE AS (SELECT manufacturer, count(product_name) cnt_prod, AVG(price) avg_p
 	     WHERE manufacturer != 'unbekannt' AND manufacturer != 'unknown' AND price != 0
 	     GROUP BY manufacturer)
 SELECT COUNT(manufacturer), AVG(cnt_prod), AVG(avg_price), AVG(avg_rate) FROM CTE WHERE cnt_prod > 10;
+
 
 
 WITH CTE AS (SELECT manufacturer, count(product_name) cnt_prod, AVG(price) avg_price, FLOOR(AVG(num_reviews)) avg_cnt_reviews, AVG(rate) avg_rate, 
