@@ -27,8 +27,8 @@ FROM amazon1 t1
 -- Split first two words of Product_name
 
 WITH cte AS (SELECT product_name, substring_index(product_name, ' ', 1) first_word, 
-					substring_index(substring_index(product_name, ' ', 2),' ', -1) second_word
-			 FROM amazon1)
+	     substring_index(substring_index(product_name, ' ', 2),' ', -1) second_word 
+	     FROM amazon1)
 SELECT first_word, COUNT(first_word) FROM cte GROUP BY first_word ORDER BY COUNT(first_word) DESC;
 
 -- Most repeated first words are the manufacturer's name
